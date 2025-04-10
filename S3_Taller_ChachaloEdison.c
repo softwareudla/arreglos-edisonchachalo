@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     float promedio = 0, max = 0, min = 10, nota;
     int opc, contM = 0, contE = 0, auxM, auxE, len;
     int aprobados = 0, reprobados = 0, maxM = 0, minM = 10;
+    int val;
 
     do
     {
@@ -70,19 +71,25 @@ int main(int argc, char *argv[])
                     do
                     {
                         printf("%s: ", materia[i]);
-                        scanf("%f", &calificaciones[contE][i]);
+                        val = scanf("%f", &calificaciones[contE][i]);
+                        if (val != 1)
+                        {
+                            printf("Error: Dato invalido\n");
+                            getchar();
+                        }
                         if (calificaciones[contE][i] < 0 || calificaciones[contE][i] > 10)
                         {
                             printf("Nota no valida. La calificacion debe estar entre 0 y 10\n");
                         }
 
-                    } while (calificaciones[contE][i] < 0 || calificaciones[contE][i] > 10);
+                    } while (val != 1 || calificaciones[contE][i] < 0 || calificaciones[contE][i] > 10);
                     suma += calificaciones[contE][i];
                 }
                 promedio = suma / 3;
                 printf("Promedio: %.2f\n", promedio);
+
                 contE++;
-            } while (contE < 5);
+            } while (val != 1 || contE < 5);
 
             break;
         case 3:
@@ -100,14 +107,44 @@ int main(int argc, char *argv[])
             }
             printf("\nSeleccione un estudiante\n");
             printf("Ingrese el # del estudiante en la lista: ");
-            scanf("%d", &auxE);
+            val = scanf("%d", &auxE);
+            if (val != 1)
+            {
+                printf("Error: Dato invalido\n");
+            }
+
             if (auxE < 0 || auxE >= contE)
             {
                 printf("Estudiante no se encuentra en la lista");
                 break;
             }
+            float suma = 0;
+            min = 10;
+            max = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                suma += calificaciones[auxE][i];
+                if (calificaciones[auxE][i] > max)
+                {
+                    max = calificaciones[auxE][i];
+                }
+                if (calificaciones[auxE][i] < min)
+                {
+                    min = calificaciones[auxE][i];
+                }
+            }
+            promedio = suma / 3;
 
             printf("\nPromedio de %s: %.2f\n", estudiante[auxE], promedio);
+            if (promedio >= 6)
+            {
+                printf("APROBADO\n");
+            }
+            else
+            {
+                printf("REPROBADO\n");
+            }
+
             printf("Nota mas alta: %.2f\n", max);
             printf("Nota mas baja: %.2f\n", min);
 
@@ -126,12 +163,19 @@ int main(int argc, char *argv[])
             }
             printf("Seleccione una Materia\n");
             printf("Ingrese el # de la Materia de la lista: ");
-            scanf("%d", auxM);
+            val = scanf("%d", &auxM);
+            if (val != 1)
+            {
+                printf("Error: Dato Inválido\n");
+            }
+            
             if (auxM < 0 || auxM > contM)
             {
                 printf("# ingresado no se encuentra en la lista");
                 break;
             }
+            aprobados = 0, reprobados = 0, maxM = 0, minM = 10;
+
             for (int i = 0; i < contE; i++)
             {
                 nota = calificaciones[i][auxM];
