@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
+// TRABAJO REALIZADO POR: EDISON CHACHALO y EYBRAHAM SAAVEDRA
 int main(int argc, char *argv[])
 {
 
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     do
     {
-        printf("Seleccione una opcion:\n");
+        printf("\nSeleccione una opcion:\n");
         printf("1. Registro Materias\n");
         printf("2. Ingresar Notas\n");
         printf("3. Informacion Estudiantes\n");
@@ -167,15 +167,18 @@ int main(int argc, char *argv[])
             if (val != 1)
             {
                 printf("Error: Dato Inválido\n");
+                getchar();
             }
-            
-            if (auxM < 0 || auxM > contM)
+
+            if (auxM < 0 || auxM >= contM)
             {
                 printf("# ingresado no se encuentra en la lista");
                 break;
             }
-            aprobados = 0, reprobados = 0, maxM = 0, minM = 10;
-
+            aprobados = 0;
+            reprobados = 0;
+            maxM = calificaciones[0][auxM];
+            minM = calificaciones[0][auxM];
             for (int i = 0; i < contE; i++)
             {
                 nota = calificaciones[i][auxM];
