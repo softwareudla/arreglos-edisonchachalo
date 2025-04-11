@@ -164,11 +164,14 @@ int main(int argc, char *argv[])
             printf("Seleccione una Materia\n");
             printf("Ingrese el # de la Materia de la lista: ");
             val = scanf("%d", &auxM);
-            if (val != 1)
+            do
             {
-                printf("Error: Dato Inválido\n");
-                getchar();
-            }
+                if (val != 1)
+                {
+                    printf("Error: Dato Inválido\n");
+                    getchar();
+                }
+            } while (val != 1);
 
             if (auxM < 0 || auxM >= contM)
             {
@@ -177,26 +180,31 @@ int main(int argc, char *argv[])
             }
             aprobados = 0;
             reprobados = 0;
-            maxM = calificaciones[0][auxM];
-            minM = calificaciones[0][auxM];
+            maxM = 0;
+            minM = 10;
+            int tieneNotas = 0;
             for (int i = 0; i < contE; i++)
             {
                 nota = calificaciones[i][auxM];
-                if (nota >= 6)
+                if (nota >= 0 && nota <= 10)
                 {
-                    aprobados++;
-                }
-                else
-                {
-                    reprobados++;
-                }
-                if (nota > maxM)
-                {
-                    maxM = nota;
-                }
-                if (nota < minM)
-                {
-                    minM = nota;
+                    tieneNotas = 1;
+                    if (nota >= 6)
+                    {
+                        aprobados++;
+                    }
+                    else
+                    {
+                        reprobados++;
+                    }
+                    if (nota > maxM)
+                    {
+                        maxM = nota;
+                    }
+                    if (nota < minM)
+                    {
+                        minM = nota;
+                    }
                 }
             }
             printf("\nMateria: %s\n", materia[auxM]);
